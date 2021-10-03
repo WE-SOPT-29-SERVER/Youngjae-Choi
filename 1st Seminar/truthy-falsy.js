@@ -1,9 +1,6 @@
 const num1 = 1;
 const num2 = 2;
 const str = "2";
-
-
-
 const bool = true;
 
 console.log(num1==bool); // true
