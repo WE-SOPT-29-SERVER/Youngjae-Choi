@@ -1,7 +1,15 @@
+/** truthy, falsy
+--------------------------------
+js의 다양한 자료형들은 값이 있는지 없는지, 그 여부를 타입캐스팅 할 수 있다. 
+대충 값이 true인 것과 대충 false인 것들을 알아본다!
+--------------------------------  
+**/
+
 const num1 = 1;
 const num2 = 2;
 const str = "2";
 const bool = true;
+// num2와 str을 비교하면 2가 "2"로 바뀐다.
 
 console.log(num1==bool); // true
 // 1 -> true
