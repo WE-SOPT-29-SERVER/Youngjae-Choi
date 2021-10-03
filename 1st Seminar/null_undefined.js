@@ -16,6 +16,7 @@ console.log(`nothing : ${nothing}, type: ${typeof nothing}`);
 let x;
 console.log(`x: ${x}, type ${typeof x}`); // undefined
 
+
 // null과 undefined 비교하기
 /** 
  * ==(동등연산자) : 값만 비교한다.
@@ -26,6 +27,7 @@ console.log("null === undefined: ", null === undefined);
 console.log("null == undefined: ", null == undefined);
 // null과 undefined를 비교해보면 값만 비교했을땐 true를 리턴하지만 
 // 타입까지 비교했을때는 false임을 확인할 수 있다.
+
 
 
 // typeof 를 사용하면 다양한 값/변수들의 타입을 확인할 수 있다.
