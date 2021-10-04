@@ -342,7 +342,7 @@ arr = [elem1, elem2, elem3]
 
 ### 배열 순회
 
-- for in : for in 은 객체를 탐색한다. 객체의 모든 열거 가능한 속성(property)에 대한 반복
+- **for in** : for in 은 객체를 탐색한다. 객체의 모든 열거 가능한 속성(property)에 대한 반복
 
   ```javascript
     // for in 은 객체를 탐색한다
@@ -352,7 +352,7 @@ arr = [elem1, elem2, elem3]
     console.log(serverIndexStr);
   ```
 
-- for of : for of 은 배열 값을 탐색한다. [Symbol.iterator] 속성을 가지는 컬렉션 전용
+- **for of** : for of 은 배열 값을 탐색한다. [Symbol.iterator] 속성을 가지는 컬렉션 전용
 
   ```javascript
     // for of 은 배열 값을 탐색한다.
@@ -362,12 +362,74 @@ arr = [elem1, elem2, elem3]
     console.log(serverPartMemberNameStr);
   ```
 
-- forEach : forEach는 오직 Array 객체에서만 사용가능하다. 배열의 요소들을 반복하여 작업을 수행한다.
+- **forEach** : forEach는 오직 Array 객체에서만 사용가능하다. 배열의 요소들을 반복하여 작업을 수행한다.
 
   ```javascript
     serverPart.forEach(item => {
       console.log(item);
     });
+  ```
+
+
+
+## function
+
+function은 하나의 특정한 동작을 하도록 설계된 독립적인 블록이다.  
+자바스크립트에선 function을 "일급객체"로 취급한다.  
+그렇기에 function은 변수 또는 데이터 구조에 담을 수 있고,  
+다른 함수의 파라미터로 전달할 수 있으며, 반환 값으로도 사용이 가능하다
+
+- **함수 선언식** : 함수선언식은 호이스팅의 영향을 받는다
+
+  ```javascript
+  // 함수 선언문 생성
+  function add(x,y) {
+      return x+y;
+  }
+  // 함수 선언문 실행
+  console.log(add(2,3));
+  ```
+
+- **함수 표현식** : 함수 표현식은 호이스팅에 영향을 받지 않는다! 함수를 변수에 할당한다!! (일급객체!)
+
+  ```javascript
+  // 함수 표현식 생성 
+  const addStr = function (x,y) {
+      return x+y;
+  };
+  // 함수 표현식 실행
+  console.log(addStr("안녕","하세요"));
+  ```
+
+- **함수 표현식 (화살표 함수)** : 함수 표현식을 간결하게 쓸 수 있는 방법이다! 변수가 하나인 경우에 소괄호 생략이 가능하고, 상황에따라 return 문도 생략이 가능하다.
+
+  ```javascript
+  // 일반적인 화살표 함수 사용법!
+  const add2 = (x,y) => {
+      return x+y;
+  };
+  // 변수가 하나인 경우는 소괄호 생략이 가능! (x) -> x
+  const returnX = x => {
+      return x;
+  };
+  // 변수가 없는 경우에는 빈 소괄호를 사용한다.
+  const returnOne = () => {
+      return 1;
+  };
+  
+  // 로직이 한줄일때 return 문 생략 가능
+  const add3 = (x,y) => x+y;
+  // 매개변수가 하나일때 매개변수 소괄호 생략 가능
+  const square = x => x * x;
+  // 객체를 리턴하고 로직이 한줄일때는 소괄호 ( ) 로 감싸줘야함
+  const person2 = (name, age) => ({ name: name, age: age });
+  // 위의 person2 화살표 함수는 아래의 함수표현식과 동일하다!
+  const person3 = function (name, age) {
+    return {
+      name: name,
+      age: age,
+    };
+  };
   ```
 
   
