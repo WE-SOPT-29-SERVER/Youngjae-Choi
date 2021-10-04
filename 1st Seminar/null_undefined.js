@@ -18,10 +18,7 @@ console.log(`x: ${x}, type ${typeof x}`); // undefined
 
 
 // null과 undefined 비교하기
-/** 
- * ==(동등연산자) : 값만 비교한다.
- * ===(일치연산자) : 값과 타입을 비교한다.
-*/
+
 console.log("null vs undefined");
 console.log("null === undefined: ", null === undefined);
 console.log("null == undefined: ", null == undefined);
