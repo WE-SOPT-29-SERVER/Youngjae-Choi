@@ -529,11 +529,41 @@ const sopt = {
   // 두팔이는 종이 푸들이고, 나이가 7세입니다 ~
   ```
 
-  
+# Node.js
 
+Node.js는 브라우저에서만 돌아가는 JS를 브라우저 바깥에서 실행할 수 있도록 해주는 런타임 환경을 의미한다.  
 
+## Node.js의 특징
 
-## Node.js
+###  - Non-Blocking I/O 
 
+- blocking I/O  
+  I/O 작업이 끝날 때까지 기존의 작업을 중단하고 대기하다가, I/O 작업이 끝나고나면 다음 작업을 이어 진행한다
+- non-blocking I/O  
+  I/O가 진행되는 동안, 멈추지 않고 다음 작업을 진행한다. 즉 I/O와 동시에 작업 수행이 가능하다.
 
+### - Single Thread
+
+노드를 실행하면 프로세스를 한게 생성하고, 그 프로세스는 여러개의 쓰레드를 생성한다.  
+하지만 제어가능한 쓰레드(JS를 실행하는 쓰레드)는 단 하나다!
+
+- 프로세스 : 운영체제에서 할당하는 작업의 단위
+- 쓰레드 : 프로세스 내에서 실행되는 흐름의 단위. 쓰레드는 부모 프로세스의 자원을 공유 가능하다
+
+### - Event-Driven
+
+Event-Driven은 어떤 이벤트가 발생할 때 미리 지정해둔 작업을 수행하는 방식을 의미한다. 
+--> "'어떤 일'이 발생하면 '이런 동작'을 수행"을 지정해두는 방식
+
+- call stack : 실행되는 함수들이 스택의 구조로 쌓이는 곳 
+- background : 로직이 실행되는 공간
+- callback queue : 이벤트 발생 후 콜백 함수들이 기다리는 공간
+- event loop : 코백 큐의 콜백 함수를 콜 스택에 전달한다. --> 단 콜 스택이 비어있을 때만 가져온다
+
+**Event-Driven의 작동 방식**
+
+1. 특정 함수가 call stack에 push 된다. 만일 해당 함수가 바로 실행되면 바로 pop되고,  특정 이벤트가 발생한다면 해당 콜백 함수가 background로 pop되고 background에서 해당 콜백함수가 실행된다.
+2. 해당 이벤트가 실행을 마치면, 해당 함수는 call stak이 아닌  calback queue로 이동한다
+3. call stack이 비었다면 event loop이 callback queue에서  콜백 함수를  call stak으로 이동시킨다. (call stack이 빈 경우에만!)
+4. call stack에서 콜백 함수를 pop 한다.
 
