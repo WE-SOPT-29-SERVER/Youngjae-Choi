@@ -46,18 +46,18 @@ console.log();
 // 2-2, push, pop
 // 배열의 맨 뒤에 요소를 추가하거나 삭제한다
 arr.push("new item");
-console.log("arr push:", arr);
+console.log("arr push:", arr); // [1,2,3,4,"new item"]
 arr.pop();
-console.log("arr pop:", arr);
+console.log("arr pop:", arr); // [1,2,3,4]
 console.log();
 
 
 // 2-3 shift, unshift
 // 배열의 맨 앞에 요소를 추가하거나 삭제한다.
 arr.unshift("first item");
-console.log("arr unshift:", arr);
+console.log("arr unshift:", arr); // ["first item",1,2,3,4]
 arr.shift();
-console.log("arr shift:", arr);
+console.log("arr shift:", arr); // [1,2,3,4]
 console.log();
 
 // 2-4 includes
@@ -140,14 +140,14 @@ console.log();
 // 필터는 배열 요소 전체를 대상으로 조건을 걸어서 그 조건을 충족하는 결과를 반환해준다.
 let number = [100, 234, -125, 1, 23, -637, -123, 99, 2, 3, 4, 5];
 let minusNumber = number.filter(item => item < 0);
-console.log("minusNumber: ", minusNumber);
+console.log("minusNumber: ", minusNumber); // minusNumber:  [ -125, -637, -123 ]
 console.log();
 
 // 2-11 map  
 // map은 배열 요소 전체를 대상으로 함수를 호출하고, 그 결과를 새로운 배열로 반환할때 주로 사용한다.
 let countries2 = ["Österreich", "Andorra", "Vietnam", "Korea", "China"];
 let countriesLengths = countries2.map(item => item.length);
-console.log("countriesLengths: ", countriesLengths);
+console.log("countriesLengths: ", countriesLengths); // countriesLengths:  [ 10, 7, 7, 5, 5 ]
 console.log();
 
 // 2-12 reduce 
