@@ -21,6 +21,8 @@
   const는 재선언과 재할당이 전부 불가능하다
   초기화 값이 없으면 선언이 불가능하다.Scope
 
+
+
 ## Scope
 
 - **Function Scope**
@@ -78,6 +80,8 @@
   //  --> 만일 x,y를 이 자리에서 출력하려고 했다면, Block Scope를 벗어나는 것이기에 에러가 발생한다!
   ```
 
+
+
 ## Hoisting
 
 *Hoisting*은 코드의 선언부를 맨 위로 끌어올리는 것을 의미한다*.  
@@ -88,6 +92,8 @@
 코드의 가독성을 높이고*,* 유지보수를 원활하게 하기 위해선 *hoisting*을 고려하여 코드를 짜야하는데*,* 방법은 간단하다*!*  
 이런 문제들은 *-> let*과 *const*를 사용하면 대부분 해결된다*!*
 
+
+
 ## 동등 연산자, 일치 연산자
 
 - == (동등연산자) : 값만 비교한다.
@@ -95,6 +101,8 @@
 
 - === (일치연산자) : 값과 타입을 비교한다.*
   === -> equal, !== -> not equal
+
+
 
 ## String 자료형
 
@@ -111,6 +119,8 @@ const strr = "안녕하세요" + myName + "입니다";
 const backtickStr = `안녕하세요 ${myName}입니다`;
 ```
 
+
+
 ## null과 undefined
 
 - **null** : 값이 정해지지 않은 것 --> *변수가 선언되었지만 값이 없는 경우*
@@ -120,6 +130,8 @@ const backtickStr = `안녕하세요 ${myName}입니다`;
   고치기엔, 이를 활용한 코드가 너무 많아 지금까지 그냥 냅뒀다고 한다. 골때려 정말~
 
 - **undefined** : 타입이 정해지지 않은 것 --> *선언되지 않은 변수나, 존재하지 않는 값이 있는 경우*
+
+
 
 ## Object
 
@@ -175,6 +187,8 @@ property*로는 함수도 들어갈 수 있는데*,* 이런 함수를 *method* �
   animal.thisFriends();
   ```
 
+
+
 ## truthy / falsy
 
 *js의 다양한 자료형들은 값이 있는지 없는지, 그 여부를 타입캐스팅 할 수 있다.* 
@@ -204,6 +218,8 @@ property*로는 함수도 들어갈 수 있는데*,* 이런 함수를 *method* �
   console.log(Boolean('')) //false
   console.log(Boolean(false)) //false
   ```
+
+
 
 ## Array
 
@@ -432,4 +448,92 @@ function은 하나의 특정한 동작을 하도록 설계된 독립적인 블�
   };
   ```
 
+
+
+## JSON (JavaScript Object Notation)
+
+JSON은 객체를 표현하는 하나의 표현방식이다.   
+key와 value로 구성된 프로퍼티의 정렬되지 않은 집합이다.  
+작은 단위의 Daya 교환 형식이고, 클라이언트와 통신시에 주로 사용한다.  
+
+```javascript
+const sopt = {
+    name: "WE SOPT",
+    slogan: "우리가 SOPT입니다",
+    part: ["plan", "design", "android", "iOS", "server", "web"],
+    number: 199,
+    printName: function () {
+      console.log("name : ", this.name);
+    },
+    printNum: function () {
+      console.log("number : ", this.number);
+    },
+  };
   
+  console.log("typeof sopt : " + typeof sopt); // JSON은 객체의 표현방식을 말하는 것이기 떄문에, type은 당연히 object!
+```
+
+- **\+ 과 ,***
+  객체를 출력할때 +를 사용한다면 '문자열 합치기'가 되어버리기 때문에, 객체 정보를 제대로 확인할 수 없다.  
+   \+ 대신 , 를 사용해서 객체를 출력해준다면, 객체의 정보를 제대로 볼 수 있다.
+
+  ```javascript
+  console.log("sopt : " + sopt); // sopts  : [object Object]
+  
+  console.log("sopt : ", sopt);
+  /*
+    sopt :  {
+    name: 'WE SOPT',
+    slogan: '우리가 SOPT입니다',
+    part: [ 'plan', 'design', 'android', 'iOS', 'server', 'web' ],
+    number: 199,
+    printName: [Function: printName],
+    printNum: [Function: printNum]
+  }
+  */
+  ```
+
+- **stringify( )** : javascript 객체를 JSON 문자열로 변환하여주는 함수이다.
+
+  ```javascript
+  console.log("sopt :" + JSON.stringify(sopt));
+  /*
+  sopt :{"name":"WE SOPT","slogan":"우리가 SOPT입니다","part":["plan","design","android","iOS","server","web"],"number":199}
+  */
+  ```
+
+- **JSON 배열**
+
+  ```javascript
+  const dogs = [
+      { name: "식빵", family: "웰시코기", age: 1, weight: 2.14 },
+      { name: "콩콩", family: "포메라니안", age: 3, weight: 2.5 },
+      { name: "두팔", family: "푸들", age: 7, weight: 3.1 },
+    ];
+  
+  console.log("dogs :" + JSON.stringify(dogs));
+  // dogs :[{"name":"식빵","family":"웰시코기","age":1,"weight":2.14},{"name":"콩콩","family":"포메라니안","age":3,"weight":2.5},{"name":"두팔","family":"푸들","age":7,"weight":3.1}]
+    
+    dogs.forEach(dog =>
+      console.log(
+        dog.name +
+          "이는 종이 " +
+          dog.family +
+          "이고, 나이가 " +
+          dog.age +
+          "세입니다 ~",
+      ),
+    );
+  // 식빵이는 종이 웰시코기이고, 나이가 1세입니다 ~
+  // 콩콩이는 종이 포메라니안이고, 나이가 3세입니다 ~
+  // 두팔이는 종이 푸들이고, 나이가 7세입니다 ~
+  ```
+
+  
+
+
+
+## Node.js
+
+
+

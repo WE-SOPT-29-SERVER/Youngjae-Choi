@@ -35,6 +35,8 @@ const sopt = {
 
 console.log("sopt : " + sopt);
 console.log("sopt : ", sopt);
+console.log()
+
 
 /** stringify() 
 javascript 객체를 JSON 문자열로 변환하여주는 함수이다.
@@ -44,3 +46,30 @@ console.log("sopt :" + JSON.stringify(sopt));
 sopt.printName();
 sopt.number = 190;
 sopt.printNum();
+console.log()
+
+
+/* -------------------- */
+/*   2. JSON 배열 실습    */
+/* -------------------- */
+
+const dogs = [
+    { name: "식빵", family: "웰시코기", age: 1, weight: 2.14 },
+    { name: "콩콩", family: "포메라니안", age: 3, weight: 2.5 },
+    { name: "두팔", family: "푸들", age: 7, weight: 3.1 },
+  ];
+  
+  console.log("dogs : " + dogs);
+  console.log("dogs : ", dogs);
+  console.log("dogs :" + JSON.stringify(dogs));
+  
+  dogs.forEach(dog =>
+    console.log(
+      dog.name +
+        "이는 종이 " +
+        dog.family +
+        "이고, 나이가 " +
+        dog.age +
+        "세입니다 ~",
+    ),
+  );
