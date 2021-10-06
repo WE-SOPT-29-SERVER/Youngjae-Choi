@@ -478,7 +478,7 @@ Js의 event-driven 라는 특징을 매번 염두에 두고 코드를 짜야한�
 
 - **배열 셔플하기**  
   [sort()와 셔플 알고리즘 설명](https://ko.javascript.info/task/shuffle)  
-  [sort()와 셔플 알고리즘 설명2](https://taesung1993.tistory.com/54 ) 
+  [sort()와 셔플 알고리즘 설명2](https://taesung1993.tistory.com/54 )   
   [sort함수를 활용한 배열 셔플의 원리 설명!](https://forum.freecodecamp.org/t/how-does-math-random-work-to-sort-an-array/151540 ) 
 
 - **sort() 함수**  
