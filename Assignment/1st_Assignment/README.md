@@ -117,8 +117,8 @@ members: [
  * 우선 YB,OB를 구분하여 리스트를 만든다.
  * 랜덤 함수를 활용하여 위에 만든 OB,YB 리스트의 순서을 섞어준다.
  *
- * 원하는 조별 최대 인원을 정수로 입력받는다! 
- * 그럼 총 몇개의 조가 짜여지는지 알 수 있는데,그 조의 개수만큼 빈 배열을 만든다.
+ * 원하는 조별 최대 인원을 정수로 입력받는다!
+ * 그럼 총 몇개의 조가 짜여지는지 알 수 있는데, 그 조의 개수만큼 빈 배열을 만든다.
  *
  * 이후 OB 먼저 각 조에 배치하고, 이어서 YB들을 이어서 조에 차례로 배치해준다.
  * 만일 해당 조의 최다 인원이 다 차 있는 경우에는, 자리가 남은 곳에 YB 인원을 배치시킨다.
@@ -174,28 +174,6 @@ const members = [
   { name: "허유정", part: "Server", group: "YB" },
 ];
 
-// 위의 member 데이터를 중 YB들만 구분하는 함수
-const getYB = (members) => {
-  let YBs = [];
-  members.forEach((member) => {
-    if (member.group == "YB") {
-      YBs.push(member);
-    }
-  });
-  return YBs;
-};
-
-// member 데이터 중 OB들만 구분하는 함수
-const getOB = (members) => {
-  let OBs = [];
-  members.forEach((member) => {
-    if (member.group == "OB") {
-      OBs.push(member);
-    }
-  });
-  return OBs;
-};
-
 // 리스트의 요소 순서들을 무작위로 바꾸어주는 함수 --> 피셔-예이츠 셔플(Fisher-Yates shuffle)
 function shuffle(array) {
   for (let index = array.length - 1; index > 0; index--) {
@@ -208,9 +186,10 @@ function shuffle(array) {
   }
 }
 
-// 위에서 만든 함수를 활용하여, YB, OB를 구분해주고
-const YBList = getYB(members);
-const OBList = getOB(members);
+// filter를 사용하여 YB, OB를 구분해준다.
+let YBList = members.filter((member) => member.group == "YB");
+let OBList = members.filter((member) => member.group == "OB");
+
 // 각각의 리스트를 무작위로 재배열한다.
 shuffle(YBList);
 shuffle(OBList);
@@ -251,7 +230,7 @@ const buildTeam = () => {
   for (let i = 0; i < groupCount; i++) {
     teams[i] = new Array();
   }
-  // 그렇게 생성된 배열은 다음과 같다
+  //   그렇게 생성된 배열은 다음과 같다
   // teams = [[1조],[2조],[3조],[4조]...]
 
   // OB, YB의 비율을 최대한 맞추어야하기 떄문에 우선 각 조마다 골고루 OB를 뿌려준다.
