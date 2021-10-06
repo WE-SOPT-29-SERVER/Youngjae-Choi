@@ -153,7 +153,7 @@ const buildTeam = () => {
   // 각 조에 YB를 채워넣는 방법은 OB와 동일하다.
   // 하지만 하나 더 고려해야할 것은, 우리는 조에 들어갈 최대 인원을 체크해야한다는 점이다!
   // 그렇기에 for문 안에서, 해당 인원이 들어갈 조의 인원이 최대로 찼는지를 확인해주고
-  // 자리가 남아있는 경우에만 push를 해주고, 자리가 다 찼다면 위에 만들어둔 surplus 배열로 push gownsek.
+  // 자리가 남아있는 경우에만 push를 해주고, 자리가 다 찼다면 위에 만들어둔 surplus 배열로 push 해준다.
   for (let i = 0; i < YBcount; i++) {
     if (teams[i % groupCount].length != teamMemberCount) {
       teams[i % groupCount].push(YBList[i]);
