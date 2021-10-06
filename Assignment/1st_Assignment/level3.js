@@ -59,28 +59,6 @@ const members = [
   { name: "허유정", part: "Server", group: "YB" },
 ];
 
-// 위의 member 데이터를 중 YB들만 구분하는 함수
-const getYB = (members) => {
-  let YBs = [];
-  members.forEach((member) => {
-    if (member.group == "YB") {
-      YBs.push(member);
-    }
-  });
-  return YBs;
-};
-
-// member 데이터 중 OB들만 구분하는 함수
-const getOB = (members) => {
-  let OBs = [];
-  members.forEach((member) => {
-    if (member.group == "OB") {
-      OBs.push(member);
-    }
-  });
-  return OBs;
-};
-
 // 리스트의 요소 순서들을 무작위로 바꾸어주는 함수 --> 피셔-예이츠 셔플(Fisher-Yates shuffle)
 function shuffle(array) {
   for (let index = array.length - 1; index > 0; index--) {
@@ -93,9 +71,10 @@ function shuffle(array) {
   }
 }
 
-// 위에서 만든 함수를 활용하여, YB, OB를 구분해주고
-const YBList = getYB(members);
-const OBList = getOB(members);
+// filter를 사용하여 YB, OB를 구분해준다.
+let YBList = members.filter((member) => member.group == "YB");
+let OBList = members.filter((member) => member.group == "OB");
+
 // 각각의 리스트를 무작위로 재배열한다.
 shuffle(YBList);
 shuffle(OBList);
