@@ -1,13 +1,12 @@
 const members = require("./members");
-// import members from "./members.js";
 
 const getOnline = (members) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const OnlineList = members.filter(
+      const onlineList = members.filter(
         (member) => member.location === "online"
       );
-      resolve(OnlineList);
+      resolve(onlineList);
     }, 500);
   });
 };
@@ -15,10 +14,10 @@ const getOnline = (members) => {
 const getOffline = (members) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const OfflineList = members.filter(
+      const offlineList = members.filter(
         (member) => member.location === "offline"
       );
-      resolve(OfflineList);
+      resolve(offlineList);
     }, 500);
   });
 };
@@ -41,6 +40,24 @@ const getOB = (members) => {
   });
 };
 
-getOnline(members).then(getOB).then(console.log);
+// promise Chaining으로 구현
+getOnline(members)
+  .then((x) => getOB(x))
+  .then(console.log);
+getOffline(members).then(getYB).then(console.log);
 
-// getYB().then().then();
+// Async & Await 으로 구현
+const getOnlineOBWithAsync = async (members) => {
+  const onlineMembers = await getOnline(members);
+  const onlineOBMembers = await getOB(onlineMembers);
+  console.log(onlineOBMembers);
+};
+
+const getOfflineYBWithAsync = async (members) => {
+  const offlineMembers = await getOffline(members);
+  const offlineYBMembers = await getYB(offlineMembers);
+  console.log(offlineYBMembers);
+};
+
+getOnlineOBWithAsync(members);
+getOfflineYBWithAsync(members);
