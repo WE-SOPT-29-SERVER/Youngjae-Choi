@@ -1,4 +1,4 @@
-# 2nd Seminar
+2nd Seminar
 
 ![image](https://user-images.githubusercontent.com/49263163/136764245-5d153a4e-b1d5-4ce0-bfc8-e23d90249daa.png)
 
@@ -102,3 +102,37 @@ promise가 콜백 보다 낫긴하지만, Promise Chaining이 복잡해지면 �
   - async는 무조건 promise를 반환한다.
 - **Await**
   - promise를 (promise가 resolve 되거나 reject 되기를) 기다릴 때 사용한다. 
+
+```javascript
+// async-await을 사용하는 방법
+
+// promise를 반환하는 두개의 함수. resolve시 '함수이름 : 인자'를 반환한다
+let asyncFunc1 = (msg) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(`func1: ${msg}`);
+    }, 1000);
+  });
+};
+
+let asyncFunc2 = (msg) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(`func2: ${msg}`);
+    }, 2000);
+  });
+};
+
+// Async & Await 표현식
+const asyncMain = async () => {
+  let result = await asyncFunc2("Hello");
+  console.log(result);
+
+  result = await asyncFunc2("world");
+  console.log(result);
+};
+
+asyncMain();
+
+```
+
