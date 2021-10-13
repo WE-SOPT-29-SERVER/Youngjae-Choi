@@ -23,6 +23,7 @@ const calculator = {
 
 module.exports = calculator;
 
+// 아래와 같이 바로 exports 해주는 것도 가능!
 // module.exports = {
 //     add,
 //     substract,
