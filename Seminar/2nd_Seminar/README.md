@@ -1,4 +1,4 @@
-2nd Seminar
+# 2nd Seminar
 
 ![image](https://user-images.githubusercontent.com/49263163/136764245-5d153a4e-b1d5-4ce0-bfc8-e23d90249daa.png)
 
@@ -8,7 +8,7 @@
 
 ### 동기 (Synchronous) 
 
-작업에 대한 요청이 발생하면면, 해당 요청에 대한 응답이 완료될 때까지 기다리는 방식.   
+작업에 대한 요청이 발생하면, 해당 요청에 대한 응답이 완료될 때까지 기다리는 방식.   
 응답을 받으면 작업을 다시 시작한다. 
 
 ### 비동기 (Asynchronous)
@@ -144,4 +144,100 @@ asyncMain();
 - `module.exports` : export 되는 모듈로 취급하겠다는 의미.  
   이걸 쓰면 다른 파일에서, `require("")`코드를 사용해 해당 모듈을 쓸 수 있다.  
 
-## 2) crypto
+### exports 예시
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+function subtract(a, b) {
+  return a - b;
+}
+const calculator = {
+  add,
+  subtract,
+};
+
+module.exports = calculator;
+```
+
+### require 예시
+
+```javascript
+const calculator = require("./calculator");
+
+const addResult = calculator.add(1, 3);
+const subtractResult = calculator.subtract(1, 3);
+
+console.log(
+  "result : ",
+  addResult,
+  subtractResult,
+);
+```
+
+## 2) crypto 모듈을 사용한 암호화
+
+- crypto : 문자열을 암호화, 복호화, hashing하는 모듈
+- Hashing : 복호화 할 수 없는 암호화 방식 (단방향 암호화)  -> 한 문자열을 고정된 길이의 다른 문자열로 바꿔줌
+- Salt : 암호화 중 해싱을 할 때 사용하는 임의의 문자열. DB에 salt와 password를 같이 저장해줘야한다
+- Ket Stretching : 해싱을 반복적으로 하는 암호화 방식. 해싱된 암호를 다시 입력값으로 넣어 또 해싱한다.
+
+### 2)-1 crypto 사용
+
+```javascript
+const crypto = require("crypto");
+
+const password = "qwerty"; // 기존 비밀번호
+const hex = crypto.createHash("sha512").update(password).digest("hex"); 
+// crypto 모듈을 활용해 암호화한 비밀번호.
+```
+
+- `createHash()`
+  md5, sha256, sha512 등의 알고리즘 입력. (주로 sha512 사용).
+  해시 값을 반환한다.
+- `update()`
+  변환할 문자열을 입력한다
+- `digest()`
+  base64, hex 등의 인고딩 알고리즘을 입력한다.
+
+### 2)-2 비밀번호를 저장하는 네가지 방법
+
+1. **단순 텍스트**
+   - 단순 텍스트로 패스워드를 저장하는 것은 범죄와 같다!
+2. **Hashing**
+   - 입력 받은 암호를 해싱하여 저장.
+   - avalanche 효과 ( 입력값에 미세한 변화만 있어도 출력값이 크게 변함 -> 보안 굳!)
+   - rainbow attack에 취약. (흔한 비밀번호에 대한 해시값들을 리스트로 저장해두고 그 값을 이용해 무작위 공격)
+3. **Hashing with Salt**
+   - 패스워드에 '소금'을 쳐서 암호화한다
+   - Salt(임의의 문자열)을 추가해서 해싱하니 더욱 보안이 좋아진다!
+4. **Ket Stretching**
+   - '패스워드에 '소금'을 쳐서 암호화' 한걸 n번 실행한다.
+
+### 2)-3 pbkdf2
+
+비밀번호 암호화에서 사용하는 알고리즘
+crypto에 내장되어있기에   
+`crypto.pbkdf2 (비번, 솔트 값, 반복 횟수, 출력 byte, 해시 알고리즘, callback)` 로 사용하면 된다!
+
+## 3) File System 모듈
+
+파일 시스템에 접근해서 파일 생성, 삭제, 읽기, 쓰기를 할 수 있는 모듈.
+
+- **비동기 방식**
+  - Promise를 지원하지 않아 callback을 사용한다.
+  - `readFile(path, [option], callback)`
+  - `writeFile(file, data, [option], callback)`
+
+- **동기 방식**
+  - `readFileSync(path, [options])`
+  - `writeFileSync(file, data, [options])`
+
+**그런데!! 우리는 위의 crypto와 fs 모듈을 사용하지 않는다!!**  
+왜냐하면?! 
+비밀번호를 직접 암호화 하는 것보다 Firebase의 Authentication 서비스를 활용하는 것이 훨씬 더 간단하고, 
+fs로 파일을 읽는 것보다 Firebase의 Firestore 서비스를 이용하는 것이 더 유연하기 때문이다!
+
+# 3. Express
+
