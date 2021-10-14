@@ -1,12 +1,18 @@
 const express = require("express"); // express 모듈 불러오기
 const router = express.Router(); // Router() 미들웨어 불러오기
 
-router.get("/post", (req, res) => {
-  // Get method로 api/post 요청이 들어온다면
+router.post("/login", (req, res) => {
   const result = {
-    // 해당 로직을 실행한다
     status: 200,
-    message: "'api/blog/post' router 👀",
+    message: "'api/users/login' router 👀",
+  };
+  res.status(200), send(result);
+});
+
+router.post("/signup", (req, res) => {
+  const result = {
+    status: 200,
+    message: "'api/users/signup' router 👀",
   };
   res.status(200), send(result);
 });

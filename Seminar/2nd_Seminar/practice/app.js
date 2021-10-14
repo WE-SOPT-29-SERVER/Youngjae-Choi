@@ -6,7 +6,7 @@ const logger = require("morgan");
 
 // Route 폴더들을 import 하는 구간
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+// const usersRouter = require("./routes/users");
 
 // app이라는 변수에 express의 모든 것을 담아준다.
 // 여기서부터 express가 시작된다!
@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+// app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
