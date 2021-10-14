@@ -321,12 +321,45 @@ URI(또는 경로) 및 특정한 HTTP 요청 메소드 (GET, POST 등)에 애플
 
 1. 폴더를 생성하고, 해당 폴더에 `index.js`를 생성한다.(폴더에 접근할 때는 반드시 index.js가 있어야 한다!)
 
-2. 그 index.js 파일에 내부 로직을 생성한다.
+2. 그 index.js 파일에 내부 로직을 생성한다. (routes/api/index.js)
 
    ```javascript
+   const express = require("express"); // express 모듈 불러오기
+   const router = express.Router;  // Router() 미들웨어 불러오기
+   
+   // router를 사용해서, 라우팅을 정의한다.
+   // Get method로 api/ 요청이 들어온다면 (req,res) 함수로 대응하겠다는 의미
+   // get에서는 "/"인데 왜 api/ 요청이냐?? -> api 폴더 안에있기 때문!
+   router.get("/", (req, res) => {
+     const result = {
+       // 해당 로직을 실행한다
+       status: 200,
+       message: "api~!",
+     };
+     res.status(200), send(result);
+   });
+   
+   module.exports = router; // 생성한 router 객체를 모듈로 반환한다.
    ```
 
-   
+3. 라우터 상위 폴더인 routes의 index.js 에서 `router.use()`를 사용하여, 앞서서 생성한 폴더의 index.js로 접근한다. 
 
+   ```javascript
+   router.use("/api", require("./api"));
+   ```
 
+   - 모든 라우터들은 middleware라고 생각하면 된다.  
+     그렇게 생성된  middleware를 경로에 맞게 use 해주는 것!
+
+### 4)-3 폴더 vs 파일
+
+우리는 위에서 폴더를 사용한 라우팅을 해보았는데, 사실 파일도 방법은 똑같다! 
+
+엥? 여기서 궁금한점?!!!  
+만약 우리가 blog.js 라는 라우팅 파일을 만들었다고 했을때, 
+왜 폴더를 사용하는 방식과 똑같이 `router.use("/blog", require("./blog"));` 로 해줄 수 있는걸까?!  
+`router.use("/blog", require("./blog.js"));` 해줘야 하는거 아님??!  
+
+--> 사실 blog.js 로 해도 상관없다. **확장자를 제거한 이유는 그것이 폴더일수도, 파일일 수도 있기 때문!**    
+파일일 경우에는 blog.js를 import 해주고 만약 blog가 파일이 아닌 폴더일 경우에는 blog 폴더안에 있는 index.js를 무조건 import 해주게 된다.
 
