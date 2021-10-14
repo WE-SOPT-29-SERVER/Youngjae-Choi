@@ -4,9 +4,12 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+// Route 폴더들을 import 하는 구간
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
+// app이라는 변수에 express의 모든 것을 담아준다.
+// 여기서부터 express가 시작된다!
 const app = express();
 
 // view engine setup
@@ -42,6 +45,7 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-// app.js에서 export 되는 app이라는 모듈이 express 를 담고 있는데,
-// 거기엔 위에 잔뜩 use 해놓은 미들웨어들을 담고 이걸
-// /bin/www 에서 끌어와서 서버를 띄우는 것
+// app.js에서 export 되는 app이라는 객체는 express 를 담고 있다. (app = express())
+// 현재 express는  위에 잔뜩 use 해놓은 미들웨어들을 적용한 상태이다.
+// 다양한 미들웨어가 적용된 express가 export 되고
+// /bin/www 에서 import되어 서버를 띄우는 것

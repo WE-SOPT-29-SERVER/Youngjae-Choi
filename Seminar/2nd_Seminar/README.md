@@ -241,3 +241,92 @@ fs로 파일을 읽는 것보다 Firebase의 Firestore 서비스를 이용하는
 
 # 3. Express
 
+## 1) Express란?
+
+서버를 구성하게 될때, 우리가 서버를 구성하는 작업을 편리하게 해주는 라이브러리!
+
+## 2) Express 프로젝트 생성하기
+
+1. `npm install express -g` : express라는 모듈을 전역으로 설치한다는 명령어  
+   전역으로 설치하는 이유는, 어떤 경로에서든 express 명령어를 사용하기 위함! 
+
+2. `npm install -g express-generator` : Express 프로젝트 생성기인 express-generator를 전역으로 설치하는 명령어
+3. `express <프로젝트이름> ` : 입력한 이름을 가진 express 프로젝트를 생성하는 명령어
+   프로젝트를 생성하고 싶은 디렉토리에서 해당 명령어를 사용하면,  원하는 디렉토리에 express 프로젝트가 생성된다.
+
+## 3) Express 구조
+
+### 3)-1 bin/www
+
+- 확장자는 js가 아니지만, js파일이다. 
+- `var app = require('../app');` : app을 import함
+- `http`  : http 라는 고정적인 모듈을 사용해서 서버를 띄워준다는 의미
+- `var port = normalizePort(process.env.PORT || '3000');`
+  port 번호를 지정해준다.  process.env.PORT는 추후 설명할 예정.  
+  지금은 3000 포트를 사용한다는 뜻.
+- app을 import하고, http 모듈로 서버를 띄우고, port를 정의한다. 
+  이 express의 과정만 이해하면 되고, www 파일은 거의 손 댈일이 없다.
+
+### 3)-2 public/
+
+- `public/`은 각종 리소스를 포함하는 폴더.   
+  뷰에서 사용되는 이미지, js, stylesheets를 쓰기 위해 존재하는 폴더!
+- 그런데 우리는 express로 서버만 띄울것이기 때문에, 필요가 없다! (`views/`도 마찬가지! 얘네들은 프론트 붙일때만 사용! )
+
+### 3)-3 🔥 routes/ 🔥 (제일 중요한 폴더!!)
+
+- 페이지 라우팅과 관련된 파일들을 저장하는 폴더. 주소 별로 라우터들을 모아둔다. 
+- URL 별로 실행되는 실제 서버 로직
+- index.js를 시작으로 관리해주면 된다!
+
+### 3)-4 app.js
+
+- express가 실행되는 starting point라고 생각하면 된다!
+- `const app = express();` : app이라는 변수에 express의 모든 것을 담아준다. 여기서부터 express의 시작!
+- `app.set()` : set은 설정을 변경할 때 사용하는 명령어이다. (하지만 우리는 거의 안쓸 것)
+- `app.use()` : use는 middleware 를 사용할 때 쓰는 것. (우리가 제일 많이 사용할 예정!)
+- `module.exports = app;` :   
+  app.js에서 export 되는 app이라는 객체는 express 를 담고 있다. (`app = express()`)  
+  현재 express는  위에 잔뜩 use 해놓은 미들웨어들을 적용한 상태이다.  
+  이처럼 다양한 미들웨어가 적용된 express가 export 되고  
+  이게 /bin/www 에서 import되어 서버를 띄우는 것!
+
+### 3)-5 package.json
+
+- dependencies라고 하는 것의 모음집!  즉 우리가 사용하는 모듈들을 정리해놓은 파일이다.  
+- 목록에 정리된 모듈들은 `node_modules`에 저장되어 있음
+- `node_modules`은 굉장히 무겁기 때문에 항상 가지고 있지 않는다. (git-hub에 올라가지 않는다는 의미)  
+  .gitignore 를 사용해서 github에 올라가지 않도록 해준다.
+- 로컬에서는 `package.json`의 명세대로 모듈들을 설치하여 사용한다. 
+- 설치할 때는 `npm install`, 새로운 모듈을 설치할 때는 `npm install 모듈이름` 명령어를 사용
+- `"start": "node ./bin/www"` : 
+  js 파일을 실행할때, 우리는 `node 뭐시기`명령어를 사용해왔다.  
+  우리는 앞으로 사용할 `node ./bin/www` 명령어를 package.json에 "start"라는 스크립트로 정의해놨다.  
+  그렇기 때문에 앞으로 해당 파일을 실행 할 때는 ,`npm start`라는 명령어로 `bin/www`를 실행하게 된다!
+
+### 3)-6 Express 프로젝트 실행하기
+
+- 프로젝트 최상위에서 `npm install`로 모듈을 설치
+- 이후 같은 경로에서 `npm start`를 해주면 express가 시작된다!
+- 브라우저에서 `localhost:포트번호`로 접속하면 성공 여부를 확인할 수 있다.
+
+## 4) Express 페이지 라우팅
+
+### 4)-1 라우팅이란?? 
+
+URI(또는 경로) 및 특정한 HTTP 요청 메소드 (GET, POST 등)에 애플리케이션이 응답하는 방법을 결정하는 것!   
+우리는 `/routes` 폴더로 이들을 관리할 예정!
+
+### 4)-2 라우팅 하기
+
+1. 폴더를 생성하고, 해당 폴더에 `index.js`를 생성한다.(폴더에 접근할 때는 반드시 index.js가 있어야 한다!)
+
+2. 그 index.js 파일에 내부 로직을 생성한다.
+
+   ```javascript
+   ```
+
+   
+
+
+
