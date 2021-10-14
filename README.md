@@ -28,7 +28,7 @@
 | Week  |      Level 1      |              Level 2               |                         Level 3                          |                        Summary                         |   Date   | Check |
 | :---: | :---------------: | :--------------------------------: | :------------------------------------------------------: | :----------------------------------------------------: | :------: | :---: |
 | 1주차 | 깃허브에 커밋하기 |         json Array 만들기          |            랜덤으로 조를 짜는 알고리즘 만들기            | [1st Assignment](/Assignment/1st_Assignment/README.md) | 20/10/07 |   ✅   |
-| 2주차 | 깃허브에 커밋하기 | api/blog/post  <br />라우팅 만들기 | api/users/login<br />api/users/signup<br />라우팅 만들기 |                           -                            |    -     |       |
+| 2주차 | 깃허브에 커밋하기 | api/blog/post  <br />라우팅 만들기 | api/users/login<br />api/users/signup<br />라우팅 만들기 | [2nd Assignment](/Assignment/2nd_Assignment/README.md) | 20/10/14 |   ✅   |
 | 3주차 |         -         |                 -                  |                                                          |                           -                            |    -     |       |
 | 4주차 |         -         |                 -                  |                                                          |                           -                            |    -     |       |
 | 5주차 |         -         |                 -                  |                            -                             |                           -                            |    -     |       |
