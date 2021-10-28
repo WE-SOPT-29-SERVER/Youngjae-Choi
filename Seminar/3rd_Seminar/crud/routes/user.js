@@ -53,6 +53,17 @@ router.post("/signup", (req, res) => {
     .send(util.success(statusCode.OK, responseMessage.CREATED_USER, newUser));
 });
 
+/* 
+
+login
+METHOD : POST
+URI : localhost:3000/user/login
+REQUEST BODY :  password, email
+RESPONSE STATUS : 200 (OK)
+RESPONSE DATA : id,name,email
+
+*/
+
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -78,6 +89,9 @@ router.post("/login", (req, res) => {
       .send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
   }
 
+  // 기본적으로 response 객체를 반환한다.
+  // 근데 이게 함수의 마지막 부분일 필요는 없다.
+  // response를 보내고 다른 작업을 할수도 있다.
   res.status(statusCode.OK).send(
     util.success(statusCode.OK, responseMessage.LOGIN_SUCCESS, {
       user: {
