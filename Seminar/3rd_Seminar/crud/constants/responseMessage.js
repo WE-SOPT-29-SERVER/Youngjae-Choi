@@ -17,4 +17,5 @@ module.exports = {
   // 프로필 조회
   READ_PROFILE_SUCCESS: "프로필 조회 성공",
   UPDATE_PROFILE_SUCCESS: "프로필 업데이트 성공",
+  UPDATE_DELETE_SUCCESS: "프로필 삭제 성공",
 };
