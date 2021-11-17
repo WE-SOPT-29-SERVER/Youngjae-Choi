@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/WE-SOPT-29-SERVER/Youngjae-Choi/issues"
   },
-  "homepage": "https://github.com/WE-SOPT-29-SERVER/Youngjae-Choi#readme"
+  "homepage": "https://github.com/WE-SOPT-29-SERVER/Youngjae-Choi#readme",
+  "dependencies": {
+    "dayjs": "^1.10.7",
+    "lodash": "^4.17.21",
+    "pg": "^8.7.1"
+  }
 }
