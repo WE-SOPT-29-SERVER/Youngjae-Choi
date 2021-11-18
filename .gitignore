@@ -166,6 +166,7 @@ dist
 .webpack/
 
 #Firebase Service Account
+
 wesopt29-1ee8a-firebase-adminsdk-g7gqv-5ac091c902.json
 wesopt29-1d0dd-firebase-adminsdk-asoqg-8ba46cf61f.json
 wesopt29-1d0dd-firebase-adminsdk-asoqg-638390acba.json
