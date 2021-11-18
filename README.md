@@ -15,7 +15,7 @@
 | 1주차 |    Javascript, NodeJS, git     | 20/10/02 | [1st Seminar](/Seminar/1st_Seminar/README.md) |  ✅   |
 | 2주차 | 비동기 흐름제어, 모듈, Express | 20/10/09 | [2nd Seminar](/Seminar/2nd_Seminar/README.md) |  ✅   |
 | 3주차 | HTTP, CRUD, Firebase Cloud Function | 20/10/23 | [3rd Seminar](/Seminar/3rd_Seminar/README.md) | ✅ |
-| 4주차 |            Firebase            | 20/10/30 |                                               |       |
+| 4주차 |            DB, SQL            | 20/10/30 |                                               |       |
 | 5주차 |         API 제작 실전          | 20/11/13 |                                               |       |
 | 6주차 |  클라이언트-서버 합동 세미나   | 20/11/20 |                                               |       |
 | 7주차 |         Response 가공          | 20/11/27 |                                               |       |
