@@ -14,7 +14,7 @@
 | :---: | :----------------------------: | :------: | :-------------------------------------------: | :---: |
 | 1주차 |    Javascript, NodeJS, git     | 20/10/02 | [1st Seminar](/Seminar/1st_Seminar/README.md) |  ✅   |
 | 2주차 | 비동기 흐름제어, 모듈, Express | 20/10/09 | [2nd Seminar](/Seminar/2nd_Seminar/README.md) |  ✅   |
-| 3주차 |  DB 설계, SQL, REST(ful) API   | 20/10/23 |                                               |       |
+| 3주차 | HTTP, CRUD, Firebase Cloud Function | 20/10/23 | [3rd Seminar](/Seminar/3rd_Seminar/README.md) | ✅ |
 | 4주차 |            Firebase            | 20/10/30 |                                               |       |
 | 5주차 |         API 제작 실전          | 20/11/13 |                                               |       |
 | 6주차 |  클라이언트-서버 합동 세미나   | 20/11/20 |                                               |       |
@@ -29,7 +29,7 @@
 | :---: | :---------------: | :-------------------------------: | :------------------------------------------------------: | :----------------------------------------------------: | :------: | :---: |
 | 1주차 | 깃허브에 커밋하기 |         json Array 만들기         |            랜덤으로 조를 짜는 알고리즘 만들기            | [1st Assignment](/Assignment/1st_Assignment/README.md) | 20/10/07 |  ✅   |
 | 2주차 | 깃허브에 커밋하기 | api/blog/post <br />라우팅 만들기 | api/users/login<br />api/users/signup<br />라우팅 만들기 | [2nd Assignment](/Assignment/2nd_Assignment/README.md) | 20/10/14 |  ✅   |
-| 3주차 |         -         |                 -                 |                                                          |                           -                            |    -     |       |
+| 3주차 |         깃허브에 커밋하기         |                 poisting 서버 구축하기                 | 구축한 poisting 서버<br />firebase에 배포하기 |                           -                            |    -     | ✅ |
 | 4주차 |         -         |                 -                 |                                                          |                           -                            |    -     |       |
 | 5주차 |         -         |                 -                 |                            -                             |                           -                            |    -     |       |
 | 7주차 |         -         |                 -                 |                            -                             |                           -                            |    -     |       |
