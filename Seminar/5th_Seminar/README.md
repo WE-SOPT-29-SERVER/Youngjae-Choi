@@ -1,90 +1,133 @@
-# 3rd Seminar Assignment :fire::fire::fire:
+# 5th Seminar
 
-![image](https://user-images.githubusercontent.com/49263163/142497003-aea63600-82b7-4899-ada7-021dec9c9a4c.png)
+![image](https://user-images.githubusercontent.com/49263163/142656865-ea7083be-f9a1-4b78-90f0-8a4e3ea12234.png)
 
 ---
 
-# Level 2 
+# 1.NodeJs 연동
 
-<img width="300" alt="스크린샷 2021-10-14 오후 9 28 05" src="https://user-images.githubusercontent.com/49263163/142497254-77e4fba0-1d12-4378-8239-0f3b059d6607.png">
+## 1) dotenv
 
-라우터 디렉토리 구조!
-세미나 때 진행한대로, API 요청에 따라 파일을 구분해주었다🔥
+dotenv는 여러 중요한 환경변수들을 관리하고, github에 올리지 않도록 하기위해 사용한다.
 
-## /routes/index.js
-
-```javascript
-const express = require('express');
-const router = express.Router();
-
-// '/user' 이하의 경로로 들어온 요청은 모두 user 폴더 안에서 처리
-// '/post' 이하의 경로로 들어온 요청은 모두 post 폴더 안에서 처리
-
-router.use('/user', require('./user'));
-router.use('/post', require('./post'));
-
-module.exports = router;
-```
-
-
-
-## /routes/user/index.js
-
-```javascript
-const express = require('express');
-const router = express.Router();
-
-router.post('/signup', require('./userSignupPOST'));
-router.post('/login', require('./userLoginPOST'));
-router.get('/profile/:id', require('./userProfileGET'));
-router.put('/profile/:id', require('./userProfilePUT'));
-router.delete('/profile/:id', require('./userProfileDELETE'));
-
-module.exports = router;
-```
-
-
-
-## /routes/post/index.js
-
-```javascript
-const express = require('express');
-const router = express.Router();
-
-router.get('/', require('./postGET'));
-router.get('/:id', require('./postIdGET'));
-router.post('/', require('./postPOST'));
-router.put('/:id', require('./postIdPUT'));
-router.delete('/:id', require('./postIdDELETE'));
-
-module.exports = router;
+### functions/.env
 
 ```
+DB_USER = RDS유저네임
+DB_HOST = RDS 엔드포인트
+DB_DB = postgres
+DB_PASSWORD = RDS 비밀번호
+```
 
-# Level 3 
+이렇게 .env에 선언된 변수들을
 
-Firebase 세팅 / 배포는 세미나 방식을 그대로 따라가기만 하면 된다!..   
-그런데 나에게는 정말 다양한 에러가 생겼다 ㅎ
+### functions/config/dbConfig.js
 
-## 에러 핸들링
+```javascript
+const dotenv = require('dotenv');
+dotenv.config();
 
-### 1) serve가 안돼요.. 엉엉 ㅠ
+module.exports = {
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DB,
+  password: process.env.DB_PASSWORD,
+};
+```
 
-![image](https://user-images.githubusercontent.com/49263163/142492567-cc381274-d2e5-4e71-9eda-5ad600ba87b7.png)
+이런식으로 사용이 가능하다!
 
-`npm run serve` 명령어를 사용하는 도중 위와 같은 에러를 만났는데...  
-장장 이틀에 걸쳐서 이리 뛰고 저리 뛰고 동에 번쩍 서에 번쩍 오사카 난리 부루스를 췄는데...  
-킹 갓 제너럴 팟장님의 도움을 받아 `firebase serve -p 5000 -o 127.0.0.1` 명령어를 사용하여 해결했다.  
-package.json의 serve 스크립트의 값을 위의 코드로 바꾸어주자!  
-정확한 이유는 모르겠지만 나의 컴퓨터에서 로컬 호스트가 열리지 않는 문제가 있었고, 해당 코드를 통해 포트와 주소를 직접 지정해주어 로컬 호스트를 열어주는 코드이다. 홀홀..  
-늦었지만... 비슷한 문제를 겪는 친구들이 있다면 꼭 이걸 보고 해결하길 ㅎ  
+## 2) db
 
-### 2) 배포후 API 요청을 하는데 `Your client does not have permission to get URL <code>/api/user/signup</code> from this server.` 오류가 난드아 ㅠㅠ
+### 2)-1 functions/db/db.js
 
-이 경우는 접근 권한이 막혀있기 때문에, 접근 권한을 등록해주어야한다.
+```javascript
+// 필요한 모듈들
+const functions = require('firebase-functions');
+const { Pool, Query } = require('pg');
+const dayjs = require('dayjs');
+const dotenv = require('dotenv');
+dotenv.config();
 
-1. https://console.cloud.google.com/home 에 들어가서 Cloud Function 탭을 누른다
-2. 원하는 함수를 체크한 뒤 권한(permission) 탭을 누른다
-3. `주 구성원 추가` 버튼을 누른 뒤 `새 주 구성원` 탭에는 `allUsers` 를 입력하고, `역할 선택` 에는 `CLoud Function 호출자 ( 또는 Cloud Functions Invoker)` 를 선택한뒤 추가해준다.
+// DB Config (유저, 호스트, DB 이름, 패스워드)를 로딩해줍시다.
+const dbConfig = require('../config/dbConfig');
 
-[참고- 우리의 친구 스오플](https://stackoverflow.com/questions/47511677/firebase-cloud-function-your-client-does-not-have-permission-to-get-url-200-fr)
+// NODE_ENV라는 글로벌 환경변수를 사용해서, 현재 환경이 어떤 '모드'인지 판별해줍시다.
+let devMode = process.env.NODE_ENV === 'development';
+
+// SQL 쿼리문을 콘솔에 프린트할지 말지 결정해주는 변수를 선언합시다.
+const sqlDebug = true;
+
+// 기본 설정에서는 우리가 실행하게 되는 SQL 쿼리문이 콘솔에 찍히지 않기 때문에,
+// pg 라이브러리 내부의 함수를 살짝 손봐서 SQL 쿼리문이 콘솔에 찍히게 만들어 줍시다.
+const submit = Query.prototype.submit;
+Query.prototype.submit = function () {
+  const text = this.text;
+  const values = this.values || [];
+  const query = text.replace(/\$([0-9]+)/g, (m, v) => JSON.stringify(values[parseInt(v) - 1]));
+  // devMode === true 이면서 sqlDebug === true일 때 SQL 쿼리문을 콘솔에 찍겠다는 분기입니다.
+  devMode && sqlDebug && console.log(`\n\n[👻 SQL STATEMENT]\n${query}\n_________\n`);
+  submit.apply(this, arguments);
+};
+
+// 서버가 실행되면 현재 환경이 개발 모드(로컬)인지 프로덕션 모드(배포)인지 콘솔에 찍어줍시다.
+console.log(`[🔥DB] ${process.env.NODE_ENV}`);
+
+// 커넥션 풀을 생성해줍니다.
+const pool = new Pool({
+  ...dbConfig,
+  connectionTimeoutMillis: 60 * 1000,
+  idleTimeoutMillis: 60 * 1000,
+});
+
+// 위에서 생성한 커넥션 풀에서 커넥션을 빌려오는 함수를 정의합니다.
+// 기본적으로 제공되는 pool.connect()와 pool.connect().release() 함수에 디버깅용 메시지를 추가하는 작업입니다.
+const connect = async (req) => {
+  const now = dayjs();
+  const string =
+    !!req && !!req.method
+      ? `[${req.method}] ${!!req.user ? `${req.user.id}` : ``} ${req.originalUrl}\n ${!!req.query && `query: ${JSON.stringify(req.query)}`} ${!!req.body && `body: ${JSON.stringify(req.body)}`} ${
+          !!req.params && `params ${JSON.stringify(req.params)}`
+        }`
+      : `request 없음`;
+  const callStack = new Error().stack;
+  const client = await pool.connect();
+  const query = client.query;
+  const release = client.release;
+
+  const releaseChecker = setTimeout(() => {
+    devMode
+      ? console.error('[ERROR] client connection이 15초 동안 릴리즈되지 않았습니다.', { callStack })
+      : functions.logger.error('[ERROR] client connection이 15초 동안 릴리즈되지 않았습니다.', { callStack });
+    devMode ? console.error(`마지막으로 실행된 쿼리문입니다. ${client.lastQuery}`) : functions.logger.error(`마지막으로 실행된 쿼리문입니다. ${client.lastQuery}`);
+  }, 15 * 1000);
+
+  client.query = (...args) => {
+    client.lastQuery = args;
+    return query.apply(client, args);
+  };
+  client.release = () => {
+    clearTimeout(releaseChecker);
+    const time = dayjs().diff(now, 'millisecond');
+    if (time > 4000) {
+      const message = `[RELEASE] in ${time} | ${string}`;
+      devMode && console.log(message);
+    }
+    client.query = query;
+    client.release = release;
+    return release.apply(client);
+  };
+  return client;
+};
+
+module.exports = {
+  connect,
+};
+```
+
+###  2)-2 pool
+
+pool이 뭐냐 ??  
+db와의 연결을 만들어 둔 상태에서 pool이라는 걸 만든다.   
+query가 실행이 끝날 때마다 db와의 연결을 끊는 것이 아니라, db와의 연결을 유지한 채 query가 실행될 때마다 pool에서  connection을 빌려왔다가 실행이 끝나면 release 하는 방식을 사용하게 된다.  
+query가 실행될때마다 서버와의 연결을 껐다 킬 필요가 없어지는 것!  
