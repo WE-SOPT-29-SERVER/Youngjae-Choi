@@ -24,7 +24,6 @@ module.exports = async (req, res) => {
   if (!post) {
     return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_USER));
   }
-
   const data = {
     id: post.id,
     title: post.title,
