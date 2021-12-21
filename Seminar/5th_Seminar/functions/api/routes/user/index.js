@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.post('/signup', require('./userSignupPOST'));
 router.post('/login', require('./userLoginPOST'));
-router.get('/:id', require('./userGET'));
+router.get('/user/:id', require('./userGET'));
 router.put('/profile/:id', require('./userProfilePUT'));
 router.delete('/profile/:id', require('./userProfileDELETE'));
 router.get('/list', require('./userListGET'));
