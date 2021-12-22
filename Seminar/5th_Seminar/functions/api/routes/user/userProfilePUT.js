@@ -13,14 +13,14 @@ RESPONSE DATA : 비밀번호를 제외한 Updated User 정보
 */
 
 module.exports = async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
   const { newName } = req.body;
   // request params 또는 request body가 잘못됐을 때
-  if (!id || !newName) {
+  if (!userId || !newName) {
     return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
   }
 
-  const existingUser = users.filter((obj) => obj.id === +id)[0];
+  const existingUser = users.filter((obj) => obj.id === +userId)[0];
 
   if (!existingUser) {
     return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_USER));

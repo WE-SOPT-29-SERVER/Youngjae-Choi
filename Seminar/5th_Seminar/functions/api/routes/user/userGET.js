@@ -1,3 +1,4 @@
+const functions = require('firebase-functions');
 const util = require('../../../lib/util');
 const responseMessage = require('../../../constants/responseMessage');
 const statusCode = require('../../../constants/statusCode');
@@ -28,7 +29,7 @@ module.exports = async (req, res) => {
 
     const posts = await postDB.getPostsByUserId(client, userId);
 
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_ONE_USER_SUCCESS, { user, posts }));
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_ONE_USER_SUCCESS, { user,posts }));
   } catch (error) {
     functions.logger.error(`[ERROR] [${req.method.toUpperCase()}] ${req.originalUrl}`, `[CONTENT] ${error}`);
     console.log(error);

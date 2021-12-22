@@ -82,7 +82,7 @@ const getPostsByUserId = async (client, userId) => {
     `
     SELECT * FROM post
     WHERE user_id = $1
-      AND is_deleted = FALSE
+    AND is_deleted = FALSE
     `,
     [userId],
   );

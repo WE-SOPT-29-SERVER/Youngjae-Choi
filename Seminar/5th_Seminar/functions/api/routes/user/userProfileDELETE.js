@@ -13,14 +13,14 @@ RESPONSE DATA : 삭제하고난 다음의 user 정보
 */
 
 module.exports = async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
 
   // request params가 잘못됐을 때
-  if (!id) {
+  if (!userId) {
     return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.OUT_OF_VALUE));
   }
 
-  const existingUser = users.filter((obj) => obj.id === +id)[0];
+  const existingUser = users.filter((obj) => obj.id === +userId)[0];
 
   if (!existingUser) {
     return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_USER));
