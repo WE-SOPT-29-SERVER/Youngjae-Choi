@@ -23,16 +23,16 @@ const getPostById = async (client, postId) => {
   return convertSnakeToCamel.keysToCamel(rows[0]);
 };
 
-const addPost = async (client, userId, title, content) => {
+const addPost = async (client, userId, title, content, imageUrls) => {
   const { rows } = await client.query(
     `
     INSERT INTO post
-    (user_id, title, content)
+    (user_id, title, content, image_urls)
     VALUES
-    ($1, $2, $3)
+    ($1, $2, $3, $4)
     RETURNING *
     `,
-    [userId, title, content],
+    [userId, title, content, imageUrls],
   );
   return convertSnakeToCamel.keysToCamel(rows[0]);
 };
@@ -82,7 +82,7 @@ const getPostsByUserId = async (client, userId) => {
     `
     SELECT * FROM post
     WHERE user_id = $1
-    AND is_deleted = FALSE
+      AND is_deleted = FALSE
     `,
     [userId],
   );
