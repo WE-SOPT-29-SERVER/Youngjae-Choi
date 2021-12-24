@@ -13,6 +13,10 @@ module.exports = {
   NO_USER: '존재하지 않는 회원입니다.',
   MISS_MATCH_PW: '비밀번호가 맞지 않습니다.',
 
+  // auth
+  TOKEN_EXPIRED : '토큰 만료',
+  TOKEN_INVALID : '유효하지 않은 토큰',
+
   // 프로필 조회
   READ_PROFILE_SUCCESS: '프로필 조회 성공',
 
