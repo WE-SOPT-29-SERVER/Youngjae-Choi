@@ -18,6 +18,8 @@ const checkUser = async (req, res, next) => {
   try {
     client = await db.connect(req);
     let decodedRefreshToken;
+    let needToIssueAccessToken = false;
+    let needToIssueRefreshToken = false;
     let userId;
 
     // jwt를 해독하고 인증 절차를 거칩니다.
@@ -37,6 +39,7 @@ const checkUser = async (req, res, next) => {
       // case2. access token은 만료되었지만, refresh toke은 유효한 경우
       else if (decodedRefreshToken !== TOKEN_EXPIRED) {
         userId = decodedRefreshToken.id;
+        // access token 발급해야함을 Check
       }
 
     }
@@ -46,9 +49,7 @@ const checkUser = async (req, res, next) => {
       userId = decodedAccessToken.id;
       // case3. access token은 유효하지만, refresh token은 만료된 경우
       if (decodedRefreshToken === TOKEN_EXPIRED){
-          
-
-
+          // refresh token 발급해야함을 Check
   } 
     }
 
