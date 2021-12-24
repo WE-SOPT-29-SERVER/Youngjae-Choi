@@ -48,6 +48,10 @@ module.exports = async (req, res) => {
     const user = await userDB.getUserByIdFirebase(client, idFirebase);
 
     const { accesstoken } = jwtHandlers.sign(user);
+    const { refreshtoken } = jwtHandlers.refresh(user);
+
+    const refreshTokenUpdate = userDB.addRefreshToken(client, user.id, refreshtoken);
+    console.log('refreshTokenUpdate : ', refreshTokenUpdate);
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LOGIN_SUCCESS, { user, accesstoken }));
   } catch (error) {

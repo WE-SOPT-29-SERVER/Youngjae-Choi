@@ -41,11 +41,10 @@ const refresh = (user) => {
   };
 
   const result = {
-    accesstoken: jwt.sign(payload, secretKey, refreshOptions),
+    refreshtoken: jwt.sign(payload, secretKey, refreshOptions),
   };
   return result;
 };
-
 
 // JWT를 해독하고, 해독한 JWT가 우리가 만든 JWT가 맞는지 확인합니다 (인증).
 const verify = (token) => {

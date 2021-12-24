@@ -105,4 +105,19 @@ const addUser = async (client, email, username, phone, idFirebase) => {
   return convertSnakeToCamel.keysToCamel(rows[0]);
 };
 
-module.exports = { getAllUsers, getUserById, getUserByIdFirebase, getUserByEmail, updateUser, deleteUser, addUser };
+const addRefreshToken = async (client, userId, refreshToken) => {
+  const { rows } = await client.query(
+    `
+    UPDATE "user" u
+    SET updated_at = now(), refresh_token = $2
+    WHERE id = $1
+    AND is_deleted = false
+    RETURNING *
+    `,
+    [userId, refreshToken],
+  );
+
+  return convertSnakeToCamel.keysToCamel(rows[0]);
+};
+
+module.exports = { getAllUsers, getUserById, getUserByIdFirebase, getUserByEmail, updateUser, deleteUser, addUser, addRefreshToken };

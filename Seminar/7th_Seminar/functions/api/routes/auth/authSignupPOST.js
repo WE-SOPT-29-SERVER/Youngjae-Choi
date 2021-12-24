@@ -48,6 +48,10 @@ module.exports = async (req, res) => {
     // JWT TOKEN 발급
     const { accesstoken } = jwtHandlers.sign(user);
 
+    const { refreshtoken } = jwtHandlers.refresh(user);
+    const refreshTokenUpdate = userDB.addRefreshToken(client, user.id, refreshtoken);
+    console.log('refreshTokenUpdate : ', refreshTokenUpdate);
+
     console.log(user);
 
     // user와 JWT를 response로 전송

@@ -17,40 +17,42 @@ const checkUser = async (req, res, next) => {
   let client;
   try {
     client = await db.connect(req);
-    let decodedRefreshToken;
+    let decodedRefreshToken = null;
     let needToIssueAccessToken = false;
     let needToIssueRefreshToken = false;
     let userId;
 
     // jwt를 해독하고 인증 절차를 거칩니다.
     const decodedAccessToken = jwtHandlers.verify(accesstoken);
-    if (refreshtoken){
-    decodedRefreshToken = jwtHandlers.verify(refreshtoken);
-  }
+    if (refreshtoken !== null) {
+      decodedRefreshToken = jwtHandlers.verify(refreshtoken);
+    }
     // access token 과 refresh token이 전부 유효하지 않은 경우
-    if (decodedAccessToken === TOKEN_INVALID || decodedRefreshToken === TOKEN_INVALID) return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, responseMessage.TOKEN_INVALID));
+    if (decodedAccessToken === TOKEN_INVALID || decodedRefreshToken === TOKEN_INVALID)
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, responseMessage.TOKEN_INVALID));
 
     // access token이 만료된 경우
     if (decodedAccessToken === TOKEN_EXPIRED) {
       // case1. access token 과 refresh token이 전부 만료된 경우
-      if (decodedRefreshToken === TOKEN_EXPIRED){
-            return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, responseMessage.TOKEN_EXPIRED));
-      } 
+      if (decodedRefreshToken === TOKEN_EXPIRED) {
+        return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, responseMessage.TOKEN_EXPIRED));
+      }
       // case2. access token은 만료되었지만, refresh toke은 유효한 경우
       else if (decodedRefreshToken !== TOKEN_EXPIRED) {
         userId = decodedRefreshToken.id;
         // access token 발급해야함을 Check
+        needToIssueAccessToken = true;
       }
-
     }
-    // access token이 유효한 경우 
+    // access token이 유효한 경우
     else {
       // 해독된 jwt에 담긴 id 값이 우리가 DB에서 찾고자 하는 user의 id입니다.
       userId = decodedAccessToken.id;
       // case3. access token은 유효하지만, refresh token은 만료된 경우
-      if (decodedRefreshToken === TOKEN_EXPIRED){
-          // refresh token 발급해야함을 Check
-  } 
+      if (decodedRefreshToken === TOKEN_EXPIRED) {
+        // refresh token 발급해야함을 Check
+        needToIssueRefreshToken = true;
+      }
     }
 
     // 유저id가 없을 시의 에러 처리입니다.
@@ -62,7 +64,17 @@ const checkUser = async (req, res, next) => {
     // 유저가 없을 시의 에러 처리입니다.
     if (!user) return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, responseMessage.NO_USER));
 
-    console.log("[middleware] user: ",user)
+    // 토큰 추가 발급 처리
+    if (needToIssueAccessToken === true) {
+      const { newAccessToken } = jwtHandlers.sign(user);
+      user = { ...user, newAccessToken };
+    }
+
+    if (needToIssueRefreshToken === true) {
+      const { newRefreshToken } = jwtHandlers.refresh(user);
+      let refreshtoken = await userDB.addRefreshToken(clent, userId, newRefreshToken);
+    }
+
     // 유저를 찾았으면, req.user에 유저 객체를 담아서 next()를 이용해 다음 middleware로 보냅니다.
     // 다음 middleware는 req.user에 담긴 유저 정보를 활용할 수 있습니다.
     req.user = user;
