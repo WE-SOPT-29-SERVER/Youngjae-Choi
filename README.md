@@ -30,6 +30,6 @@
 | 1주차 | 깃허브에 커밋하기 |         json Array 만들기         |            랜덤으로 조를 짜는 알고리즘 만들기            | [1st Assignment](/Assignment/1st_Assignment/README.md) | 21/10/07 |  ✅   |
 | 2주차 | 깃허브에 커밋하기 | api/blog/post <br />라우팅 만들기 | api/users/login<br />api/users/signup<br />라우팅 만들기 | [2nd Assignment](/Assignment/2nd_Assignment/README.md) | 21/10/14 |  ✅   |
 | 3주차 |         깃허브에 커밋하기         |                 poisting 서버 구축하기                 | 구축한 poisting 서버<br />firebase에 배포하기 | [3rd Assignment](/Assignment/3rd_Assignment/README.md) | 21/11/19 | ✅ |
-| 4주차 |         깃허브에 커밋하기         |                 -                 | - | [4th Assignment](/Assignment/4th_Assignment/README.md) |    -     | ✅ |
+| 4주차 |         깃허브에 커밋하기         |                 -                 | - | [4th Assignment](/Assignment/4th_Assignment) |    -     | ✅ |
 | 5주차 |         깃허브에 커밋하기         |                 -                 |                            -                            |                           -                            |    -     | ✅ |
 | 7주차 |         깃허브에 커밋하기         |                 firebase extension을 이용해  <br />image resizing 하기                 |                            refresh token 구현하기                            | [7th Assignment](/Assignment/7th_Assignment/README.md) |    21/12/24    | ✅ |
